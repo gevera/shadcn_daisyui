@@ -58,7 +58,7 @@ defmodule ShadcnDaisyui.Components.Overlay do
 
   def dialog(assigns) do
     ~H"""
-    <span :if={@trigger != []} onclick={"document.getElementById('#{@id}').showModal()"}>
+    <span :if={@trigger != []} phx-click={show_modal(@id)}>
       {render_slot(@trigger)}
     </span>
     <dialog id={@id} class={["modal", @class]} {@rest}>
@@ -97,15 +97,15 @@ defmodule ShadcnDaisyui.Components.Overlay do
 
   def sheet(assigns) do
     ~H"""
-    <span :if={@trigger != []} onclick={"document.getElementById('#{@id}').showModal()"}>
+    <span :if={@trigger != []} phx-click={show_modal(@id)}>
       {render_slot(@trigger)}
     </span>
-    <dialog id={@id} class={["sheet", @class]} onclick="if(event.target===this)this.close()" {@rest}>
+    <dialog id={@id} class={["sheet", @class]} {@rest}>
       <button
         type="button"
         class="btn btn-ghost btn-square btn-sm absolute right-3 top-3"
         aria-label="Close"
-        onclick="this.closest('dialog').close()"
+        phx-click={hide_modal(@id)}
       >
         <span class="hero-x-mark size-4" aria-hidden="true"></span>
       </button>
@@ -134,15 +134,10 @@ defmodule ShadcnDaisyui.Components.Overlay do
 
   def drawer(assigns) do
     ~H"""
-    <span :if={@trigger != []} onclick={"document.getElementById('#{@id}').showModal()"}>
+    <span :if={@trigger != []} phx-click={show_modal(@id)}>
       {render_slot(@trigger)}
     </span>
-    <dialog
-      id={@id}
-      class={["drawer-bottom", @class]}
-      onclick="if(event.target===this)this.close()"
-      {@rest}
-    >
+    <dialog id={@id} class={["drawer-bottom", @class]} {@rest}>
       <div class="mx-auto mb-4 h-1.5 w-12 rounded-full bg-base-300"></div>
       {render_slot(@inner_block)}
     </dialog>
@@ -280,7 +275,7 @@ defmodule ShadcnDaisyui.Components.Overlay do
       :if={@trigger_label != []}
       type="button"
       class="btn btn-outline w-64 justify-between"
-      onclick={"document.getElementById('#{@id}').showModal()"}
+      phx-click={show_modal(@id)}
     >
       <span class="text-muted-foreground">{render_slot(@trigger_label)}</span>
       <kbd class="kbd">⌘K</kbd>

@@ -89,6 +89,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   per `[data-theme]`); a one-off `bg-*` utility still needs `!` since the base
   rule lives in `@layer utilities`.
 
+### Fixed
+
+- **`<.sheet>`, `<.drawer>`, `<.dialog>`, `<.command>` open/close no longer silently
+  fail under a strict CSP.** The trigger slot, the sheet's X button, and the
+  sheet/drawer backdrop click-away relied on inline `onclick="..."` attributes,
+  which `script-src` without `'unsafe-inline'`/`'unsafe-hashes'` blocks with no
+  visible error - the panel would open (if opened server-side) but never close.
+  Trigger-open and the X button now use the existing `show_modal/2`/`hide_modal/2`
+  `JS` commands; backdrop click-away moved into a real listener in
+  `shadcn-daisyui.js`.
+
 ## [0.3.0] - 2026-06-11
 
 ### Added

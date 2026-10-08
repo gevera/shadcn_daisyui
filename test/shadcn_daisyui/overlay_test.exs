@@ -37,7 +37,7 @@ defmodule ShadcnDaisyui.Components.OverlayTest do
       assert html =~ "modal-backdrop"
     end
 
-    test "trigger slot wires an onclick that calls showModal" do
+    test "trigger slot wires a phx-click that dispatches shadcn:show-modal" do
       assigns = %{}
 
       html =
@@ -48,17 +48,16 @@ defmodule ShadcnDaisyui.Components.OverlayTest do
         </.dialog>
         """)
 
-      assert html =~ "showModal"
-      assert html =~ "getElementById"
-      assert html =~ "confirm"
+      assert html =~ "shadcn:show-modal"
+      assert html =~ "#confirm"
       assert html =~ "Open"
     end
 
-    test "without trigger no onclick span is rendered" do
+    test "without trigger no dispatch span is rendered" do
       assigns = %{}
       html = render(~H|<.dialog id="d">content</.dialog>|)
 
-      refute html =~ "showModal"
+      refute html =~ "shadcn:show-modal"
       refute html =~ "<span"
     end
 
@@ -92,7 +91,8 @@ defmodule ShadcnDaisyui.Components.OverlayTest do
       assert html =~ "form goes here"
       assert html =~ ~s(aria-label="Close")
       assert html =~ "hero-x-mark"
-      assert html =~ "showModal"
+      assert html =~ "shadcn:show-modal"
+      assert html =~ "shadcn:hide-modal"
     end
   end
 

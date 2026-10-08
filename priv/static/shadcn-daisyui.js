@@ -22,6 +22,12 @@ if (typeof window !== "undefined" && !window.__shadcnDialogEvents) {
     const el = e.target
     if (el && typeof el.close === "function" && el.open) el.close()
   })
+  // Backdrop click-to-close for sheet/drawer. Must stay a real listener (not
+  // JS.dispatch) since it needs the "click landed on the backdrop, not the
+  // content" check, which a declarative JS command can't express.
+  document.addEventListener("click", (e) => {
+    if (e.target.matches?.("dialog.sheet, dialog.drawer-bottom")) e.target.close()
+  })
 }
 
 function showToast(variant) {
